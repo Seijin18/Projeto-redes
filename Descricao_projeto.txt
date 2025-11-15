@@ -1,0 +1,146 @@
+
+================================================================================
+Página 1
+================================================================================
+Universidade Federal de São Paulo (UNIFESP)
+Instituto de Ciência e Tecnologia (ICT)
+UC 2617 - Redes de Computadores
+Prof. Dr. Joahannes Bruno Dias da Costa
+Projeto Prático
+Entrega: 18 de Novembro de 2025
+1 Resumo
+Este projeto prático tem como principal objetivo colocar em prática os conceitos aprendidos nas aulas
+teóricas. Tópicos que serão explorados neste projeto:
+• Instalação do Simulador de Redes
+• Criação de topologia de rede que envolva diferentes enlaces
+– Enlaces com e sem fio operando conjuntamente
+– Cenário com e sem mobilidade dos nós sem fio
+• Utilização de aplicações com TCP, UDP e TCP/UDP
+• Medição de desempenho da rede
+2 Instruções
+1. Este projeto deverá ser desenvolvido em equipe com até cinco estudantes. No Classroom da turma
+(Atividades / Projeto / Defina seu grupo) há um formulário para definição da composição
+do grupo. O estudante cujo nome não constar na planilha das equipes no momento da entrega do
+projeto terá um desconto de 1,0 ponto na nota do projeto.
+2. Leiam detalhadamente as instruções.
+3. O Professor estará disponível nos dias de atendimento para esclarecer dúvidas quanto ao projeto.
+4. Este projeto está dividido em duas partes:
+(a) Execução de experimentos no simulador de redes Network Simulator (ns-3).
+(b) Relatório técnico do que foi desenvolvido.
+5. Orelatóriodeveráter,nomáximo,15páginas. Paracadapáginaexcedente,seráaplicadoodesconto
+de 1,0 ponto.
+2.1 Entregáveis
+As entregas serão pelo exclusivamente pelo Classroom, dos arquivos de acordo com a seguinte organização
+de nomes:
+• Arquivo do relatório: equipe_x_relatorio_redes_2s2025.pdf.
+• Arquivo de simulação: equipe_x_2s2025.cc (ou .py, para os que preferirem utilizar Python).
+As equipes que não seguirem rigorosamente a nomenclatura estabelecida terão um desconto de 1,0
+ponto na nota do projeto.
+1
+================================================================================
+Página 2
+================================================================================
+2.2 Data da entrega
+A data da entrega será no dia 18 de Novembro de 2025 até às 23:59. Deverão submeter os arquivos
+no Classroom dentro da tarefa do projeto. Não precisam duplicar as submissões. Uma pessoa por grupo
+deverá submeter o projeto. Recomenda-se submeter os trabalhos com certa antecedência e não esperar os
+últimos minutos para a submissão. Não serão considerados emails enviados depois da data e hora limite
+(independentemente do motivos do atraso).
+3 Relatório
+Após todo o desenvolvimento, um relatório deve ser entregue. Utilizar o template da Sociedade Brasileira
+de Computação (LATEX1 ou Word2). O relatório deve conter a seguinte organização de seções:
+1. Resumo (visão geral sobre o projeto).
+2. Introdução.
+3. Descrição do exercício proposto.
+• Mostrar imagem da topologia da rede. Usem a criatividade e montem uma representação da
+topologia da rede.
+4. Avaliação de desempenho
+• Metodologia. Descrever como os experimentos foram realizados. Importante indicar qual
+configuração da máquina utilizada nos experimentos.
+• Parâmetros. A Tabela 1 apresenta um exemplo de como os parâmetros de simulação podem
+ser listados.
+5. Resultados (apresentem gráficos que mostrem o impacto das variações)
+• Atraso.
+• Vazão.
+• Perda de pacotes.
+• Discussão sobre os resultados obtidos. Tentar explicar o motivo de tais comportamentos nos
+gráficos.
+6. Detalhe da divisão do trabalho (Parágrafo ou tabela detalhando o que cada membro da equipe fez)
+7. Conclusão (explicar os pontos principais do trabalho)
+4 Desenvolvimento
+Documentos importantes que podem ser consultados para o desenvolvimento do projeto.
+• ns-3 Installation: LINK
+• ns-3 Tutorial: LINK
+• ns-3 Model Library: LINK
+4.1 Instalação e Configuração do simulador
+Seguir as indicações da documentação para instalação no seu ambiente. Escolha o Sistema Operacional
+de sua preferência.
+1https://www.overleaf.com/project/674e4b8981bb8c813a4208b5
+2https://www.sbc.org.br/wp-content/uploads/2024/07/modelosparapublicaodeartigos.zip
+2
+================================================================================
+Página 3
+================================================================================
+Tabela 1: Exemplo de apresentação dos parâmetros de simulação para os cenários investigados.
+Parâmetro Valor
+Tempo de simulação 60 s
+Número de cliente 1, 2, 4 e 6
+Tamanho do cenário 140m x 140m
+Padrão de comunicação IEEE 802.11a
+Potência de transmissão 16 dbm
+Velocidade dos clientes no cenário estático 0 km/h
+Velocidade dos clientes no cenário móvel 3.6 a 7.2 km/h
+Modelo de mobilidade para nós estáticos ConstantPositionMobility
+Modelo de mobilidade para nós móveis ConstantVelocityMobility
+Taxa de dados 512 kbps
+Tamanho do quadro UDP 512 bytes
+Tamanho do quadro TCP 1500 bytes
+Número de antenas no AP 1
+Aplicações CBR, Rajada e CBR/Rajada
+4.2 Construção da simulação
+A topologia deve conter um host servidor que estará conectado via conexão cabeada a um Access Point
+(AP). O host servidor deve ser o último nó da rede cabeada, representado pelo nó s2 na Figura 1. Nesse
+ambiente, nclientes(c0,c1,c2,c3,···,cn)podemseconectaraoAP(definiroSSIDdoAPcomoEquipeX,
+ondeXéanumeraçãodasuaequipeconformeplanilhanoGoogleClassroom)paraconsumirumaaplicação
+servida pelo host servidor. É importante variar o número de clientes para ficar visível o impacto que isso
+traz para a rede. A Figura 1 mostra um exemplo dessa topologia.
+s2 s1 s0
+| | |
+===================== AP 192.168.0.0
+LAN 10.1.1.0 * * * * *
+| | | | |
+c0 c1 c2 c3 cn
+Figura 1: Cenário a ser considerado.
+Além disso, algumas variações de cenário devem ser consideradas, tais como:
+1. Cenário onde os nós sem fio (clientes) não possuem mobilidade.
+2. Cenário onde os nós sem fio (clientes) possuem mobilidade. Para esse caso, considerar a mobilidade
+de pessoas andando aleatoriamente em uma região.
+3. Cenário com aplicação que utiliza protocolo de transporte UDP.
+4. Cenário com aplicação que utiliza protocolo de transporte TCP.
+5. Cenário onde 50% dos nós utilizam aplicação UDP e 50% aplicação TCP.
+6. Em todos os casos, variar o número de clientes em {1, 2, 4, 8, 16 e 32}. Um número maior de
+clientes pode ser utilizado para evidenciar o impacto na rede.
+3
+================================================================================
+Página 4
+================================================================================
+5 Avaliação
+O projeto abrange a avaliação do relatório (estruturação, redação, resultados obtidos, etc.) e as tarefas
+realizadas (prática) de maneira conjunta. Serão avaliados o relatório entregue, assim como o trabalho de
+desenvolvimento (através dos códigos). O detalhe da avaliação é apresentado na Tabela 2.
+Tabela 2: Avaliação do projeto.
+Item % na avaliação
+Introdução e Descrição do exercício proposto 10
+Avaliação de desempenho 20
+Resultados obtidos 30
+Discussão dos resultados 30
+Conclusão 10
+6 Considerações finais
+• Revisem a documentação oficial do ns-33 para poder resolver problemas. Os fóruns online também
+são bons aliados.
+• Estabeleçam metas iniciais e etapas para avançar no projeto. A tarefa pode demorar mais se não
+forem organizados no uso de seu tempo.
+• Não comecem o projeto dias antes da submissão. Planejem a entrega e façam avanços
+oportunamente.
+3nsnam.org
+4

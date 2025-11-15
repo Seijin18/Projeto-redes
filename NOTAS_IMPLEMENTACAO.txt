@@ -1,0 +1,220 @@
+# NOTAS DE IMPLEMENTAÇÃO - Projeto NS-3 UNIFESP IC 2617
+
+## Decisões Técnicas Tomadas
+
+### 1. Framework e Linguagem
+- **NS-3 com Python 3**: Escolhido para melhor legibilidade e prototipagem rápida
+- Alternativa em C++: Mais performance (não implementada nesta versão)
+
+### 2. Topologia de Rede
+
+#### Nós Implementados
+- **3 nós cabeados**: s0, s1, s2
+- **1 nó AP**: Access Point
+- **n nós clientes**: De 1 a 32 clientes WiFi
+
+#### Enlace P2P (Cabeado)
+- **DataRate**: 100 Mbps (conforme guia)
+- **Delay**: 2 ms (conforme guia)
+- **Conexão em série**: s2 -- s1 -- s0 -- AP
+
+#### Enlace WiFi
+- **Padrão**: IEEE 802.11a (conforme UNIFESP)
+- **Modelo de Propagação**: Friis + ConstantSpeedPropagationDelay
+- **Potência TX**: 16 dBm (conforme guia)
+- **SSID**: "Equipe4"
+
+### 3. Mobilidade
+
+#### Estática
+- Modelo: `ConstantPositionMobilityModel`
+- Clientes posicionados em círculo de ~30m de raio ao redor do AP
+- Fórmula: x = 30*cos(ângulo), y = 30*sin(ângulo)
+
+#### Móvel
+- Modelo: `RandomWalk2dMobilityModel`
+- Área: 140m × 140m ([-70, 70] × [-70, 70])
+- Velocidade: 1-2 m/s (≈3.6-7.2 km/h)
+- Comportamento: Movimento aleatório com bounce nas bordas
+
+### 4. Aplicações e Protocolos
+
+#### CBR (UDP)
+- **Protocolo**: UDP
+- **Taxa**: 512 kbps (fixo)
+- **Tamanho de pacote**: 512 bytes
+- **Intervalo**: 8 ms (calculado: 512 bytes × 8 bits / 512 kbps)
+- **Modelo**: OnOffApplication com OnTime=0, OffTime=0 (contínuo)
+
+#### TCP
+- **Protocolo**: TCP
+- **Taxa**: 512 kbps (fixo)
+- **Tamanho de pacote**: 1500 bytes (MTU padrão)
+- **Intervalo**: ~23.44 ms (calculado: 1500 bytes × 8 bits / 512 kbps)
+- **Modelo**: OnOffApplication com OnTime=0, OffTime=0 (contínuo)
+
+#### Misto (50% CBR + 50% TCP)
+- **Primeira metade dos clientes**: UDP-CBR
+- **Segunda metade dos clientes**: TCP
+- Exemplo com 4 clientes:
+  - c0, c1: UDP-CBR
+  - c2, c3: TCP
+
+### 5. Endereçamento IP
+
+#### Rede Cabeada (10.1.1.0/24)
+```
+s2 (10.1.1.1) -- s1 (10.1.1.2) -- s0 (10.1.1.3) -- AP (10.1.1.4)
+```
+
+#### Rede Wireless (192.168.0.0/24)
+```
+AP (192.168.0.1)
+c0 (192.168.0.2)
+c1 (192.168.0.3)
+...
+cn (192.168.0.n+1)
+```
+
+### 6. Coleta de Dados (FlowMonitor)
+
+#### Métricas Coletadas
+- **Throughput**: Bytes recebidos / duração
+- **Delay**: Tempo entre envio e recebimento (sum/count para média)
+- **Packet Loss**: Pacotes enviados - recebidos / enviados
+
+#### Arquivo de Saída
+- Formato: Texto simples (não XML para simplificar leitura)
+- Localização: `/home/marshibs/redes/resultados/c{n}_{mob}_{app}.txt`
+- Contém: Parâmetros e 6 métricas principais
+
+### 7. Processamento e Visualização
+
+#### Gráficos Gerados
+1. **Throughput vs Clientes** (2 subgráficos: estático e móvel)
+2. **Delay vs Clientes** (2 subgráficos: estático e móvel)
+3. **Packet Loss vs Clientes** (2 subgráficos: estático e móvel)
+
+#### Formato dos Gráficos
+- Linhas com marcadores
+- Legenda para CBR, TCP, Misto
+- Grade para melhor leitura
+- Resolução: 300 DPI (qualidade para relatório)
+
+#### Tabela CSV
+- Todas as combinações de parâmetros
+- Colunas: Clientes, Mobilidade, Aplicação, Throughput, Delay, Packet Loss
+
+## Decisões Alternativas Consideradas
+
+### 1. Modelo de Mobilidade Alternativo
+- **Considerado**: ConstantVelocityMobilityModel
+- **Escolhido**: RandomWalk2dMobilityModel (mais realista para movimento aleatório de pessoas)
+
+### 2. Formato de Saída
+- **Considerado**: XML (FlowMonitor nativo)
+- **Escolhido**: Texto simples (mais fácil de processar em Python)
+
+### 3. Linguagem de Implementação
+- **Considerado**: C++ (melhor performance)
+- **Escolhido**: Python (melhor legibilidade, mais rápido de desenvolver)
+
+### 4. Estratégia de Teste
+- **Opção A**: Executar sequencialmente (36 × 60s = 36 min) ✓ Escolhida
+- **Opção B**: Executar em paralelo (mais complexo, não implementado)
+
+## Possíveis Limitações
+
+1. **Convergência de Rota**: WiFi pode levar tempo para estabelecer conexão
+   - Mitiga: Aplicações começam em 1.0s, simulação em 60s
+
+2. **Variabilidade de Resultados**: Movimento aleatório causa variação
+   - Mitiga: Seed aleatória pode ser fixada para reprodutibilidade (não implementado)
+
+3. **Escalabilidade**: 32 clientes × 512 kbps = 16 Mbps (bem abaixo de 100 Mbps teórico)
+   - Realidade: Overhead WiFi e contention reduzem throughput
+
+4. **Mobilidade**: RandomWalk2d pode não ser fisicamente realista
+   - Consideração: Gaussiana (velocidade constante) seria mais realista
+
+## Calibração e Validação
+
+### Teste 1: Cenário Simples (1 cliente, estático, CBR)
+- **Esperado**: ~512 kbps, ~0-2 ms delay, ~0% loss
+- **Comando**: `python3 equipe_4_2s2025.py --nClientes 1 --mobilidade static --aplicacao cbr`
+
+### Teste 2: Verificação TCP vs UDP
+- CBR deve ter menor delay que TCP (sem retransmissão)
+- TCP deve ter maior variabilidade
+
+### Teste 3: Impacto da Mobilidade
+- Cenário móvel deve ter maior delay e packet loss
+
+### Teste 4: Escalabilidade
+- Throughput deve diminuir com mais clientes
+- Delay deve aumentar com mais clientes
+
+## Arquivos Principais
+
+### equipe_4_2s2025.py (~600 linhas)
+- Importações e configuração
+- Função main() com loop de parâmetros
+- Criação de topologia (nós, canais, dispositivos)
+- Configuração de protocolos (WiFi, IP, aplicações)
+- FlowMonitor e coleta de dados
+- Processamento e saída de resultados
+
+### scripts/executar-experimentos.sh (~100 linhas)
+- Loop sobre 36 combinações
+- Chama o simulador com parâmetros corretos
+- Coleta de tempo e estatísticas
+
+### scripts/processar-dados.py (~300 linhas)
+- Leitura de arquivos de resultado
+- Extração de parâmetros do nome do arquivo
+- Organização de dados por métrica/aplicação/mobilidade
+- Geração de 3 gráficos matplotlib
+- Exportação de CSV
+
+## Próximas Otimizações (Para Melhorias Futuras)
+
+1. **Reprodutibilidade**: Fixar seed aleatória
+2. **Paralelização**: Executar múltiplos cenários em paralelo
+3. **Animação**: Gerar visualização da rede em movimento
+4. **Análise Estatística**: Desvio padrão, intervalo de confiança
+5. **Comparação com Teoria**: Validar contra modelo teórico de WiFi
+
+## Requisitos de Hardware
+
+- **CPU**: Qualquer processador moderno (Intel i5+, AMD Ryzen 5+)
+- **RAM**: 2 GB mínimo (sem VM)
+- **Disco**: 1 GB para código + resultados
+- **Tempo Total**: ~1 hora para 36 cenários
+
+## Estrutura do Relatório Esperado
+
+O arquivo `equipe_4_relatorio_redes_2s2025.pdf` deve conter:
+
+1. **Resumo** (150-200 palavras)
+2. **Introdução** (1-2 páginas)
+3. **Descrição do Exercício** (1-2 páginas)
+   - Diagrama de topologia
+4. **Avaliação de Desempenho** (2-3 páginas)
+   - Metodologia e hardware
+   - Tabela de parâmetros
+5. **Resultados** (4-5 páginas) ⭐ 30%
+   - 6 gráficos (2 para cada métrica)
+   - Tabelas de valores
+6. **Discussão** (2-3 páginas) ⭐ 30%
+   - Análise dos comportamentos
+   - Comparações
+7. **Conclusão** (0.5-1 página)
+8. **Divisão do Trabalho** (0.5 página)
+
+**Máximo**: 15 páginas
+
+---
+
+**Documento Preparado**: 14 de Novembro de 2025  
+**Status**: Implementação Completa  
+**Próximo Passo**: Executar simulações
