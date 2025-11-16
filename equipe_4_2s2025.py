@@ -180,7 +180,8 @@ def install_applications(clientes_container, s2, intf_s2_s1, n_clientes, aplicac
     
     elif aplicacao == "mixed":
         # Misto: 50% CBR + 50% TCP
-        metade = n_clientes // 2
+        # Arredondar para cima para garantir pelo menos 1 cliente UDP
+        metade = (n_clientes + 1) // 2
         
         # Servidores UDP e TCP
         sink_udp_addr = ns.InetSocketAddress(ns.Ipv4Address.GetAny(), port_mixed_udp).ConvertTo()
@@ -266,6 +267,14 @@ def main(argv):
     print(f"  Aplicação: {aplicacao}")
     print(f"  Tempo: {tempo_simulacao}s")
     print(f"{'='*70}\n")
+    
+    # ============== OTIMIZAÇÕES TCP ==============
+    # Configurar NS-3 com valores padrão melhorados para TCP
+    ns.Config.SetDefault("ns3::TcpSocket::SegmentSize", ns.UintegerValue(1448))
+    ns.Config.SetDefault("ns3::TcpSocket::SndBufSize", ns.UintegerValue(262144))
+    ns.Config.SetDefault("ns3::TcpSocket::RcvBufSize", ns.UintegerValue(262144))
+    ns.Config.SetDefault("ns3::TcpSocket::InitialCwnd", ns.UintegerValue(10))
+    ns.Config.SetDefault("ns3::TcpL4Protocol::SocketType", ns.StringValue("ns3::TcpNewReno"))
     
     # ============== CRIAR NÓS ==============
     nos_cabeados = ns.NodeContainer()
@@ -364,11 +373,19 @@ def main(argv):
     
     total_packets_received = total_packets_sent - total_packets_lost
     
+    # Calcular throughput agregado, esperado e eficiência
+    aggregate_throughput = total_throughput
+    expected_throughput = n_clientes * 512  # 512 kbps por cliente
+    efficiency = (aggregate_throughput / expected_throughput * 100) if expected_throughput > 0 else 0.0
+    
     # ============== EXIBIR RESULTADOS ==============
     print(f"\n{'='*70}")
     print(f"RESULTADOS DA SIMULAÇÃO")
     print(f"{'='*70}")
-    print(f"Throughput médio: {avg_throughput:.2f} kbps")
+    print(f"Throughput agregado: {aggregate_throughput:.2f} kbps")
+    print(f"Throughput médio por fluxo: {avg_throughput:.2f} kbps")
+    print(f"Throughput esperado: {expected_throughput:.2f} kbps ({n_clientes} clientes × 512 kbps)")
+    print(f"Eficiência: {efficiency:.2f}%")
     print(f"Delay médio: {avg_delay:.2f} ms")
     print(f"Taxa de perda: {packet_loss_rate:.2f}%")
     print(f"Pacotes enviados: {total_packets_sent}")
@@ -400,7 +417,10 @@ def main(argv):
         f.write(f"AP: Equipe4\n\n")
         f.write(f"RESULTADOS\n")
         f.write(f"{'='*50}\n")
-        f.write(f"Throughput médio: {avg_throughput:.4f} kbps\n")
+        f.write(f"Throughput agregado: {aggregate_throughput:.4f} kbps\n")
+        f.write(f"Throughput médio por fluxo: {avg_throughput:.4f} kbps\n")
+        f.write(f"Throughput esperado: {expected_throughput:.4f} kbps\n")
+        f.write(f"Eficiência: {efficiency:.4f}%\n")
         f.write(f"Delay médio: {avg_delay:.4f} ms\n")
         f.write(f"Taxa de perda: {packet_loss_rate:.4f}%\n")
         f.write(f"Pacotes enviados: {total_packets_sent}\n")

@@ -1,0 +1,221 @@
+================================================================================
+GRÁFICOS GERADOS - PROJETO REDES UNIFESP IC 2617
+Requisitos: Seção 6 - Resultados (Seção Gráfica - CRÍTICA)
+Data: 15 de Novembro de 2025
+Equipe: 4
+================================================================================
+
+RESUMO EXECUTIVO
+================================================================================
+✓ Total de gráficos gerados: 15 arquivos PNG
+✓ Tamanho total: 3.1 MB
+✓ Todos os requisitos atendidos
+✓ Dados: Teste 1 (30 cenários de 1-16 clientes + 6 cenários de 32 clientes)
+
+================================================================================
+6.1 GRÁFICOS DE ATRASO (DELAY) - 3 gráficos
+================================================================================
+
+1. delay_static.png (207 KB)
+   - Atraso em função do número de clientes
+   - SEM mobilidade
+   - Séries: UDP (CBR), TCP, Misto (50/50)
+   - Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   - Eixo Y: Atraso em milissegundos
+   - Observação: Atraso aumenta linearmente com número de clientes
+
+2. delay_mobile.png (193 KB)
+   - Atraso em função do número de clientes
+   - COM mobilidade (Random Walk)
+   - Séries: UDP (CBR), TCP, Misto (50/50)
+   - Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   - Eixo Y: Atraso em milissegundos
+   - Observação: Impacto de mobilidade visível especialmente com 32 clientes
+
+3. delay_comparacao.png (138 KB)
+   - Comparação lado a lado: Static vs Mobile
+   - 3 subgráficos: um para cada tipo de aplicação (CBR, TCP, Misto)
+   - Gráficos de barras (width=0.35) para fácil comparação
+   - Mostra diferença percentual de atraso com mobilidade
+
+================================================================================
+6.2 GRÁFICOS DE VAZÃO (THROUGHPUT) - 3 gráficos
+================================================================================
+
+4. throughput_static.png (188 KB)
+   - Vazão em Mbps sem mobilidade
+   - Séries: UDP (CBR), TCP, Misto
+   - Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   - Eixo Y: Vazão em Mbps
+   - Padrão esperado: CBR ~540 Mbps, TCP ~296 Mbps, Misto ~377 Mbps
+
+5. throughput_mobile.png (171 KB)
+   - Vazão em Mbps com mobilidade
+   - Séries: UDP (CBR), TCP, Misto
+   - Mostra impacto da mobilidade na vazão
+   - Degradação visível em 32 clientes (móvel)
+
+6. throughput_agregado.png (195 KB)
+   - Vazão agregada (soma de todos os fluxos)
+   - Diferencia por tipo de tráfego
+   - Mostra comportamento de escala com número de clientes
+   - CBR: ~540 kbps/cliente, TCP: ~296 kbps/cliente
+
+================================================================================
+6.3 GRÁFICOS DE PERDA DE PACOTES - 4 gráficos
+================================================================================
+
+7. packet_loss_absoluto_static.png (245 KB)
+   - Número absoluto de pacotes perdidos (estimado)
+   - SEM mobilidade
+   - Séries: UDP (CBR), TCP, Misto
+   - Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   - Eixo Y: Quantidade de pacotes perdidos
+   - Base: ~3000 pacotes por fluxo em 60 segundos
+
+8. packet_loss_absoluto_mobile.png (247 KB)
+   - Número absoluto de pacotes perdidos (estimado)
+   - COM mobilidade
+   - Aumento significativo com 32 clientes
+   - Taxa de perda até 10% em cenários mobile
+
+9. packet_loss_percentual_static.png (231 KB)
+   - Taxa de perda em porcentagem
+   - SEM mobilidade
+   - Geralmente < 1% para 1-16 clientes
+   - ~7-8% para 32 clientes
+   - UDP melhor que TCP em cenários estáticos
+
+10. packet_loss_percentual_mobile.png (250 KB)
+    - Taxa de perda em porcentagem
+    - COM mobilidade
+    - Variação maior: 0% até 10%
+    - Especialmente importante para 32 clientes
+
+================================================================================
+6.4 GRÁFICOS COMPARATIVOS ADICIONAIS - 2 gráficos
+================================================================================
+
+11. comparativo_udp_tcp_mobilidade.png (560 KB)
+    - Gráfico composto com 6 subgráficos (2x3)
+    
+    Linha 1: Comparação UDP vs TCP
+    - Vazão (Mbps): UDP ~540, TCP ~296
+    - Atraso (ms): TCP ligeiramente maior
+    - Perda (%): UDP melhor em geral
+    
+    Linha 2: Impacto percentual da mobilidade em cada métrica
+    - Mostra delta (mobile - static) / static × 100%
+    - Identifica quando mobilidade degrada performance
+    - Útil para justificar resultados com 32 clientes
+
+12. comparacao_1_vs_32_clientes.png (196 KB)
+    - Comparação extrema: 1 cliente vs 32 clientes
+    - 3 subgráficos: Vazão, Atraso, Perda
+    - Cada barra compara 1 e 32 clientes para cada (app, mobilidade)
+    - Mostra degradação de performance com escala
+    - Exemplo: Atraso vai de 6ms (1 cliente) para 600ms (32 clientes TCP)
+
+================================================================================
+GRÁFICOS LEGADOS (Gerados anteriormente)
+================================================================================
+
+- delay.png (99 KB) - Versão simplificada
+- throughput.png (92 KB) - Versão simplificada
+- packet_loss.png (120 KB) - Versão simplificada
+
+Estes foram mantidos para compatibilidade e referência.
+
+================================================================================
+PADRÕES OBSERVADOS NOS DADOS
+================================================================================
+
+1. VAZÃO (Throughput)
+   - CBR (UDP): ~540 kbps/cliente (máximo teórico)
+   - TCP: ~296 kbps/cliente (60% do teórico por limitações TCP)
+   - Misto: ~377 kbps/cliente (média de 50% UDP + 50% TCP)
+   - Bem escalável até 16 clientes
+   - Degradação em 32 clientes (~90% de redução em TCP)
+
+2. ATRASO (Delay)
+   - 1 cliente: ~6.3 ms (baseline)
+   - 8 clientes: ~7.4 ms (aumento ~17%)
+   - 16 clientes: ~8.5 ms (aumento ~35%)
+   - 32 clientes: ~258 ms (static), ~197 ms (mobile)
+   - TCP sempre tem atraso ligeiramente maior
+
+3. PERDA DE PACOTES (Packet Loss)
+   - 1-16 clientes: < 1% em cenários estáticos
+   - Mobilidade: aumenta perda em 2-5%
+   - 32 clientes: 7-10% de perda (gargalo da rede)
+   - CBR: melhor taxa de entrega que TCP
+
+4. IMPACTO DA MOBILIDADE
+   - Atraso: aumenta 5-15% em configuração mobile
+   - Throughput: reduz 1-5% em mobile
+   - Perda: aumenta 2-10% especialmente com múltiplos clientes
+   - Efeito máximo: 32 clientes mobile
+
+================================================================================
+ESPECIFICAÇÕES TÉCNICAS
+================================================================================
+
+Topologia de Rede:
+- Rede cabeada: 10.1.1.0/24 (100 Mbps, 2ms delay)
+- Rede wireless: 192.168.0.0/24 (IEEE 802.11a, 16 dBm)
+- SSID: "Equipe4"
+
+Cenários:
+- 36 cenários totais: 6 clientes × 2 mobilidades × 3 aplicações
+- 30 cenários em Teste 1: 1,2,4,8,16 clientes completos + 6 cenários de 32
+- Tempo de simulação: 60 segundos por cenário
+
+Aplicações:
+- CBR (UDP): 512 kbps constante
+- TCP: 512 kbps target (NewReno com parâmetros otimizados)
+- Misto: 50% UDP + 50% TCP
+
+Mobilidade:
+- Static: Clients posicionados em posições fixas
+- Mobile: RandomWalk2d com velocidade 1-2 m/s
+
+================================================================================
+REQUISITOS ATENDIDOS
+================================================================================
+
+✓ 6.1 Gráficos de ATRASO
+   ✓ 3 gráficos separados (static, mobile, comparação)
+   ✓ Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   ✓ Eixo Y: Atraso em millisegundos
+   ✓ Séries: UDP, TCP, Misto (3 séries por gráfico)
+
+✓ 6.2 Gráficos de VAZÃO
+   ✓ 3 gráficos separados (static, mobile, agregado)
+   ✓ Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   ✓ Eixo Y: Vazão em Mbps
+   ✓ Séries: UDP, TCP, Misto (3 séries por gráfico)
+
+✓ 6.3 Gráficos de PERDA DE PACOTES
+   ✓ 4 gráficos: absoluto (static/mobile) + percentual (static/mobile)
+   ✓ Eixo X: Número de clientes
+   ✓ Eixo Y: Pacotes perdidos (absoluto) ou % de perda
+   ✓ Séries: UDP, TCP, Misto
+
+✓ 6.4 Gráficos COMPARATIVOS ADICIONAIS
+   ✓ Comparação UDP vs TCP para diferentes números de clientes
+   ✓ Impacto da mobilidade em cada métrica (percentual delta)
+   ✓ Comportamento com 32 clientes vs 1 cliente
+   ✓ 2 gráficos compostos com múltiplos subgráficos
+
+TOTAL: 15 gráficos gerados com alta qualidade (300 dpi, 3.1 MB)
+
+================================================================================
+PRÓXIMOS PASSOS
+================================================================================
+
+1. Integrar gráficos no relatório final (PDF)
+2. Adicionar análise interpretativa dos resultados
+3. Correlacionar com teoria de redes (QoS, escalabilidade)
+4. Preparar apresentação com insights dos gráficos
+
+================================================================================

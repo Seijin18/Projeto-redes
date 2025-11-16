@@ -17,9 +17,12 @@ AP: Equipe4
 
 RESULTADOS
 ==================================================
-Throughput médio: 295.8048 kbps
-Delay médio: 6.3124 ms
-Taxa de perda: 0.0088%
-Pacotes enviados: 11325
-Pacotes recebidos: 11324
+Throughput agregado: 564.9962 kbps
+Throughput médio por fluxo: 282.4981 kbps
+Throughput esperado: 512.0000 kbps
+Eficiência: 110.3508%
+Delay médio: 6.3668 ms
+Taxa de perda: 0.0132%
+Pacotes enviados: 7551
+Pacotes recebidos: 7550
 Pacotes perdidos: 1
