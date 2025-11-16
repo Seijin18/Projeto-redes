@@ -1,0 +1,28 @@
+Simulação NS-3 - UNIFESP IC 2617
+Equipe 4 - 2º Semestre 2025
+VERSÃO: NS-3 Real com Python Bindings
+
+PARÂMETROS
+==================================================
+Número de clientes: 32
+Mobilidade: mobile
+Aplicação: tcp
+Tempo de simulação: 60.0s
+
+TOPOLOGIA
+==================================================
+Rede cabeada: 10.1.1.0/24 (100Mbps, 2ms)
+Rede wireless: 192.168.0.0/24 (IEEE 802.11a, 16dBm)
+AP: Equipe4
+
+RESULTADOS
+==================================================
+Throughput agregado: 17889.3774 kbps
+Throughput médio por fluxo: 279.5215 kbps
+Throughput esperado: 16384.0000 kbps
+Eficiência: 109.1881%
+Delay médio: 326.6180 ms
+Taxa de perda: 1.2615%
+Pacotes enviados: 231715
+Pacotes recebidos: 228792
+Pacotes perdidos: 2923

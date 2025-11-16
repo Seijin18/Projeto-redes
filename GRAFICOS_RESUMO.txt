@@ -1,0 +1,136 @@
+========================================================================
+RESUMO DOS GRÁFICOS GERADOS
+Projeto de Redes - UNIFESP IC 2617
+Equipe 4 - 2º Semestre 2025
+========================================================================
+
+Data de Geração: Novembro 15, 2025
+Total de Cenários: 36 (6 clientes × 2 mobilidades × 3 aplicações)
+Diretório: /home/marshibs/redes/graficos
+
+========================================================================
+GRÁFICOS DE ATRASO (DELAY) - 3 gráficos
+========================================================================
+
+1. 1_atraso_sem_mobilidade.png (254.6 KB)
+   - Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   - Eixo Y: Atraso em milissegundos
+   - Séries: UDP (CBR), TCP, Misto
+   - Cenário: SEM mobilidade (estático)
+
+2. 2_atraso_com_mobilidade.png (235.6 KB)
+   - Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   - Eixo Y: Atraso em milissegundos
+   - Séries: UDP (CBR), TCP, Misto
+   - Cenário: COM mobilidade (mobile)
+
+3. 3_atraso_comparacao.png (327.2 KB)
+   - Comparação lado a lado (Sem mobilidade vs Com mobilidade)
+   - Mostra impacto direto da mobilidade no atraso
+   - 6 clientes em cada gráfico
+
+========================================================================
+GRÁFICOS DE VAZÃO (THROUGHPUT) - 3 gráficos
+========================================================================
+
+4. 4_vazao_sem_mobilidade.png (282.7 KB)
+   - Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   - Eixo Y: Vazão agregada em Mbps
+   - Séries: UDP (CBR), TCP, Misto
+   - Cenário: SEM mobilidade (estático)
+
+5. 5_vazao_com_mobilidade.png (271.7 KB)
+   - Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   - Eixo Y: Vazão agregada em Mbps
+   - Séries: UDP (CBR), TCP, Misto
+   - Cenário: COM mobilidade (mobile)
+
+6. 6_vazao_comparacao.png (371.4 KB)
+   - Comparação lado a lado (Sem mobilidade vs Com mobilidade)
+   - Mostra escalabilidade da vazão com aumento de clientes
+   - Evidencia saturação em 32 clientes
+
+========================================================================
+GRÁFICOS DE PERDA DE PACOTES - 3 gráficos
+========================================================================
+
+7. 7_perda_sem_mobilidade.png (182.3 KB)
+   - Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   - Eixo Y: Perda de pacotes em %
+   - Séries: UDP (CBR), TCP, Misto
+   - Cenário: SEM mobilidade (estático)
+
+8. 8_perda_com_mobilidade.png (222.7 KB)
+   - Eixo X: Número de clientes (1, 2, 4, 8, 16, 32)
+   - Eixo Y: Perda de pacotes em %
+   - Séries: UDP (CBR), TCP, Misto
+   - Cenário: COM mobilidade (mobile)
+
+9. 9_perda_comparacao.png (267.7 KB)
+   - Comparação lado a lado (Sem mobilidade vs Com mobilidade)
+   - Mostra aumento significativo de perda com mobilidade
+   - Perda mais crítica em cenários com 32 clientes
+
+========================================================================
+GRÁFICOS COMPARATIVOS ADICIONAIS - 3 gráficos
+========================================================================
+
+10. 10_udp_vs_tcp_comparativo.png (344.9 KB)
+    - Comparação UDP vs TCP em 6 subgráficos
+    - 3 métricas (Vazão, Atraso, Perda)
+    - 2 cenários (Sem mobilidade vs Com mobilidade)
+    - Mostra diferenças de desempenho entre protocolos
+
+11. 11_impacto_mobilidade.png (387.0 KB)
+    - Mudança percentual causada pela mobilidade
+    - 3 métricas (Vazão, Atraso, Perda)
+    - Análise para cada tipo de tráfego (CBR, TCP, MIXED)
+    - Identifica quais métricas mais sofrem com mobilidade
+
+12. 12_escalabilidade_1_vs_32.png (196.5 KB)
+    - Comparação de desempenho: 1 cliente vs 32 clientes
+    - 3 métricas em subgráficos
+    - 6 cenários (3 aplicações × 2 mobilidades)
+    - Evidencia degradação com aumento de clientes
+
+========================================================================
+TOTAL DE GRÁFICOS: 12
+TAMANHO TOTAL: ~3.7 MB
+FORMATO: PNG 300 DPI (alta resolução para impressão)
+========================================================================
+
+PRINCIPAIS INSIGHTS DOS DADOS:
+
+1. ATRASO (Delay):
+   - Sem mobilidade: Estável ~6-8ms para poucos clientes
+   - Com mobilidade: Aumenta gradualmente com clientes
+   - Com 32 clientes: Atraso crítico (>200ms em alguns casos)
+   - TCP mostra maior atraso em cenários com 32 clientes
+
+2. VAZÃO (Throughput):
+   - Escalabilidade linear até 16 clientes
+   - Saturação em 32 clientes (WiFi congestionado)
+   - UDP mantém ~0.54 Mbps por cliente
+   - TCP e MIXED atingem ~0.56 Mbps por cliente
+
+3. PERDA DE PACOTES (Packet Loss):
+   - Sem mobilidade: ~0% de perda (até 16 clientes)
+   - Com mobilidade: Aumenta significativamente
+   - Com 32 clientes: Perda elevada (7-10%)
+   - CBR (UDP) mais sensível à mobilidade
+
+4. IMPACTO DA MOBILIDADE:
+   - Atraso aumenta em média 10-50% com mobilidade
+   - Vazão reduz em média 5-15% com mobilidade
+   - Perda aumenta dramaticamente (até 500% em alguns casos)
+
+========================================================================
+PRÓXIMAS ETAPAS:
+
+1. ✓ Gráficos gerados com sucesso
+2. Atualizar relatório PDF com novos gráficos
+3. Adicionar análise dos gráficos ao documento
+4. Revisão final dos resultados
+5. Submissão do projeto
+
+========================================================================

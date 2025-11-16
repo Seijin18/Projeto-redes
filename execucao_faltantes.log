@@ -6,3 +6,231 @@ Data: 2025-11-15 20:57:08
 ========================================================================
 ========================================================================
 [1/6] Executando: N=32, Mobilidade=static, Aplicação=cbr...
+
+======================================================================
+Simulação NS-3 - UNIFESP IC 2617
+======================================================================
+Parâmetros:
+  Clientes: 32
+  Mobilidade: static
+  Aplicação: cbr
+  Tempo: 60.0s
+======================================================================
+
+Executando simulação...
+Coletando resultados...
+
+======================================================================
+RESULTADOS DA SIMULAÇÃO
+======================================================================
+Throughput agregado: 15558.05 kbps
+Throughput médio por fluxo: 486.19 kbps
+Throughput esperado: 16384.00 kbps (32 clientes × 512 kbps)
+Eficiência: 94.96%
+Delay médio: 258.84 ms
+Taxa de perda: 10.03%
+Pacotes enviados: 235968
+Pacotes recebidos: 212304
+Pacotes perdidos: 23664
+======================================================================
+
+Resultado salvo: /home/marshibs/redes/resultados/c32_static_cbr.txt
+[1/6] ✓ OK (11m 14s)
+
+[2/6] Executando: N=32, Mobilidade=static, Aplicação=tcp...
+
+======================================================================
+Simulação NS-3 - UNIFESP IC 2617
+======================================================================
+Parâmetros:
+  Clientes: 32
+  Mobilidade: static
+  Aplicação: tcp
+  Tempo: 60.0s
+======================================================================
+
+Executando simulação...
+Coletando resultados...
+
+======================================================================
+RESULTADOS DA SIMULAÇÃO
+======================================================================
+Throughput agregado: 17934.01 kbps
+Throughput médio por fluxo: 280.22 kbps
+Throughput esperado: 16384.00 kbps (32 clientes × 512 kbps)
+Eficiência: 109.46%
+Delay médio: 217.95 ms
+Taxa de perda: 0.32%
+Pacotes enviados: 229258
+Pacotes recebidos: 228516
+Pacotes perdidos: 742
+======================================================================
+
+Resultado salvo: /home/marshibs/redes/resultados/c32_static_tcp.txt
+[2/6] ✓ OK (10m 36s)
+
+[3/6] Executando: N=32, Mobilidade=static, Aplicação=mixed...
+
+======================================================================
+Simulação NS-3 - UNIFESP IC 2617
+======================================================================
+Parâmetros:
+  Clientes: 32
+  Mobilidade: static
+  Aplicação: mixed
+  Tempo: 60.0s
+======================================================================
+
+Executando simulação...
+Coletando resultados...
+
+======================================================================
+RESULTADOS DA SIMULAÇÃO
+======================================================================
+Throughput agregado: 17071.74 kbps
+Throughput médio por fluxo: 355.66 kbps
+Throughput esperado: 16384.00 kbps (32 clientes × 512 kbps)
+Eficiência: 104.20%
+Delay médio: 131.95 ms
+Taxa de perda: 0.54%
+Pacotes enviados: 206229
+Pacotes recebidos: 205112
+Pacotes perdidos: 1117
+======================================================================
+
+Resultado salvo: /home/marshibs/redes/resultados/c32_static_mixed.txt
+[3/6] ✓ OK (9m 37s)
+
+[4/6] Executando: N=32, Mobilidade=mobile, Aplicação=cbr...
+
+======================================================================
+Simulação NS-3 - UNIFESP IC 2617
+======================================================================
+Parâmetros:
+  Clientes: 32
+  Mobilidade: mobile
+  Aplicação: cbr
+  Tempo: 60.0s
+======================================================================
+
+Executando simulação...
+Coletando resultados...
+
+======================================================================
+RESULTADOS DA SIMULAÇÃO
+======================================================================
+Throughput agregado: 15938.72 kbps
+Throughput médio por fluxo: 498.08 kbps
+Throughput esperado: 16384.00 kbps (32 clientes × 512 kbps)
+Eficiência: 97.28%
+Delay médio: 197.23 ms
+Taxa de perda: 7.83%
+Pacotes enviados: 235968
+Pacotes recebidos: 217487
+Pacotes perdidos: 18481
+======================================================================
+
+Resultado salvo: /home/marshibs/redes/resultados/c32_mobile_cbr.txt
+[4/6] ✓ OK (11m 4s)
+
+[5/6] Executando: N=32, Mobilidade=mobile, Aplicação=tcp...
+
+======================================================================
+Simulação NS-3 - UNIFESP IC 2617
+======================================================================
+Parâmetros:
+  Clientes: 32
+  Mobilidade: mobile
+  Aplicação: tcp
+  Tempo: 60.0s
+======================================================================
+
+Executando simulação...
+Coletando resultados...
+
+======================================================================
+RESULTADOS DA SIMULAÇÃO
+======================================================================
+Throughput agregado: 17889.38 kbps
+Throughput médio por fluxo: 279.52 kbps
+Throughput esperado: 16384.00 kbps (32 clientes × 512 kbps)
+Eficiência: 109.19%
+Delay médio: 326.62 ms
+Taxa de perda: 1.26%
+Pacotes enviados: 231715
+Pacotes recebidos: 228792
+Pacotes perdidos: 2923
+======================================================================
+
+Resultado salvo: /home/marshibs/redes/resultados/c32_mobile_tcp.txt
+[5/6] ✓ OK (10m 32s)
+
+[6/6] Executando: N=32, Mobilidade=mobile, Aplicação=mixed...
+
+======================================================================
+Simulação NS-3 - UNIFESP IC 2617
+======================================================================
+Parâmetros:
+  Clientes: 32
+  Mobilidade: mobile
+  Aplicação: mixed
+  Tempo: 60.0s
+======================================================================
+
+Executando simulação...
+Coletando resultados...
+
+======================================================================
+RESULTADOS DA SIMULAÇÃO
+======================================================================
+Throughput agregado: 17213.20 kbps
+Throughput médio por fluxo: 358.61 kbps
+Throughput esperado: 16384.00 kbps (32 clientes × 512 kbps)
+Eficiência: 105.06%
+Delay médio: 131.64 ms
+Taxa de perda: 0.98%
+Pacotes enviados: 215174
+Pacotes recebidos: 213058
+Pacotes perdidos: 2116
+======================================================================
+
+Resultado salvo: /home/marshibs/redes/resultados/c32_mobile_mixed.txt
+[6/6] ✓ OK (10m 44s)
+
+========================================================================
+Tempo total: 63m 59s
+========================================================================
+
+Resumo:
+  • Arquivos gerados: 36/36
+  • Log salvo em: /home/marshibs/redes/execucao_faltantes.log
+
+✓ TODOS OS 36 CENÁRIOS FORAM COMPLETADOS COM SUCESSO!
+
+========================================================================
+
+========================================================================
+DETALHES DOS CENÁRIOS EXECUTADOS (32 clientes)
+========================================================================
+
+[1/6] c32_static_cbr.txt ............ 11m 14s ✓ OK
+[2/6] c32_static_tcp.txt ............ 10m 36s ✓ OK
+[3/6] c32_static_mixed.txt .......... 9m 37s  ✓ OK
+[4/6] c32_mobile_cbr.txt ............ 11m 4s  ✓ OK
+[5/6] c32_mobile_tcp.txt ............ 10m 32s ✓ OK
+[6/6] c32_mobile_mixed.txt .......... 10m 44s ✓ OK
+
+Tempo total: 63m 59s
+Tempo médio por cenário: ~10m 40s
+
+========================================================================
+STATUS FINAL: 36/36 CENÁRIOS COMPLETADOS
+========================================================================
+
+PRÓXIMAS ETAPAS:
+  1. Processar dados: python3 processar_dados.py
+  2. Gerar gráficos: python3 gerar_graficos_completos.py
+  3. Atualizar relatório: python3 gerar_relatorio.py
+  4. Revisar resultados em: /home/marshibs/redes/Teste 1/
+
+========================================================================
